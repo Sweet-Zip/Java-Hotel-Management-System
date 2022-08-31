@@ -13,3 +13,6 @@
   4. Customer Checkin (Add Checkin Date)
   5. Customer Checkout (Add Checkout Date and calculate total price)
   6. And a lots more
+  
+  
+# Note in order to use this program you need to include all libraries that store in lib folder
