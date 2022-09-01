@@ -41,7 +41,7 @@ public class MainDashboard extends javax.swing.JFrame {
     ConnectionProvider connectionProvider = new ConnectionProvider();
     RoomManager roomManager = new RoomManager();
     AdminAccountManager adminAccountManager = new AdminAccountManager();
-    CustomerCheckIn customer_CheckIn = new CustomerCheckIn();
+    CustomerRecord customerRecord = new CustomerRecord();
 
     public MainDashboard() {
         initComponents();
@@ -185,32 +185,33 @@ public class MainDashboard extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         checkOutSearchField = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
-        checkOutSearchBut = new javax.swing.JButton();
+        checkOutSearchNameBut = new javax.swing.JButton();
         checkOutClearSearchBut = new javax.swing.JButton();
-        jLabel34 = new javax.swing.JLabel();
-        checkOutSelectRoomType = new javax.swing.JComboBox<>();
-        jLabel35 = new javax.swing.JLabel();
-        checkOutSelectBedType = new javax.swing.JComboBox<>();
-        jLabel36 = new javax.swing.JLabel();
-        jLabel37 = new javax.swing.JLabel();
-        checkOutNationalityField = new javax.swing.JTextField();
         checkOutBut = new javax.swing.JButton();
-        jLabel38 = new javax.swing.JLabel();
         checkInClearTextBut1 = new javax.swing.JButton();
         checkOutNameField = new javax.swing.JTextField();
         checkOutRoomPrice = new javax.swing.JTextField();
-        checkOutNationalID = new javax.swing.JTextField();
-        checkOutSelectRoomNum = new javax.swing.JComboBox<>();
-        checkOutPhoneNumberField = new javax.swing.JTextField();
         jLabel39 = new javax.swing.JLabel();
-        checkOutEmailField = new javax.swing.JTextField();
-        checkOutDate = new javax.swing.JTextField();
-        jLabel40 = new javax.swing.JLabel();
-        checkOutSelectIndentity = new javax.swing.JComboBox<>();
+        checkOutOfCheckinDateField = new javax.swing.JTextField();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
-        jLabel44 = new javax.swing.JLabel();
+        checkOutRoomNoField = new javax.swing.JTextField();
+        checkOutOfCheckoutDateField = new javax.swing.JTextField();
+        checkOutTotalPriceField = new javax.swing.JTextField();
+        checkOutTotalDayField = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
+        checkOutSearchRoomNoBut = new javax.swing.JButton();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        checkOutChangeField = new javax.swing.JTextField();
+        checkOutAmountGetField = new javax.swing.JTextField();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        checkOutPhoneNumberField = new javax.swing.JTextField();
+        jLabel38 = new javax.swing.JLabel();
+        checkOutEmailField = new javax.swing.JTextField();
+        jLabel40 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 720));
@@ -1207,17 +1208,17 @@ public class MainDashboard extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "Email", "Phone Number", "Nationality", "Indentify Card", "National ID", "Check in Date", "Room", "Bed", "Room Number", "Price/Night", "Total Price"
+                "ID", "Name", "Email", "Phone Number", "Nationality", "Indentify Card", "National ID", "Check in Date", "Room", "Bed", "Room Number", "Price/Night"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1226,98 +1227,118 @@ public class MainDashboard extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(jTable2);
 
-        checkOutSearchField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkOutSearchField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        checkOutSearchField.setForeground(new java.awt.Color(102, 102, 102));
 
         jLabel33.setText("Customer Name");
 
-        checkOutSearchBut.setBackground(new java.awt.Color(102, 153, 255));
-        checkOutSearchBut.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        checkOutSearchBut.setForeground(new java.awt.Color(255, 255, 255));
-        checkOutSearchBut.setText("Search");
+        checkOutSearchNameBut.setBackground(new java.awt.Color(102, 153, 255));
+        checkOutSearchNameBut.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        checkOutSearchNameBut.setForeground(new java.awt.Color(255, 255, 255));
+        checkOutSearchNameBut.setText("Search");
 
         checkOutClearSearchBut.setBackground(new java.awt.Color(204, 0, 51));
-        checkOutClearSearchBut.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkOutClearSearchBut.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         checkOutClearSearchBut.setForeground(new java.awt.Color(255, 255, 255));
         checkOutClearSearchBut.setText("Clear");
 
-        jLabel34.setText("Email");
-
-        checkOutSelectRoomType.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        checkOutSelectRoomType.setForeground(new java.awt.Color(102, 102, 102));
-        checkOutSelectRoomType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Room Type...", "AC", "No AC", "VIP", "Suite", "President Suite", "Connecting Rooms" }));
-        checkOutSelectRoomType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkOutSelectRoomTypeActionPerformed(evt);
-            }
-        });
-
-        jLabel35.setText("Nationality");
-
-        checkOutSelectBedType.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        checkOutSelectBedType.setForeground(new java.awt.Color(102, 102, 102));
-        checkOutSelectBedType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Bed Type...", "Single Bed", "Double Bed", "Triple Bed", "Twin", "Family Bed", "King Bed", "Queen Bed" }));
-        checkOutSelectBedType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkOutSelectBedTypeActionPerformed(evt);
-            }
-        });
-
-        jLabel36.setText("National ID Or Passport");
-
-        jLabel37.setText("Select Room");
-
-        checkOutNationalityField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-
         checkOutBut.setBackground(new java.awt.Color(102, 153, 255));
-        checkOutBut.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkOutBut.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         checkOutBut.setForeground(new java.awt.Color(255, 255, 255));
-        checkOutBut.setText("Check In");
-
-        jLabel38.setText("Seclect Bed");
+        checkOutBut.setText("Check Out");
+        checkOutBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkOutButActionPerformed(evt);
+            }
+        });
 
         checkInClearTextBut1.setBackground(new java.awt.Color(204, 0, 51));
-        checkInClearTextBut1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkInClearTextBut1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         checkInClearTextBut1.setForeground(new java.awt.Color(255, 255, 255));
         checkInClearTextBut1.setText("Clear All Text");
+        checkInClearTextBut1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkInClearTextBut1ActionPerformed(evt);
+            }
+        });
 
+        checkOutNameField.setEditable(false);
         checkOutNameField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        checkOutNameField.setForeground(new java.awt.Color(102, 102, 102));
 
+        checkOutRoomPrice.setEditable(false);
         checkOutRoomPrice.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         checkOutRoomPrice.setForeground(new java.awt.Color(102, 102, 102));
 
-        checkOutNationalID.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel39.setText("Checkin Date");
 
-        checkOutSelectRoomNum.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        checkOutSelectRoomNum.setForeground(new java.awt.Color(102, 102, 102));
-        checkOutSelectRoomNum.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkOutSelectRoomNumActionPerformed(evt);
-            }
-        });
-
-        checkOutPhoneNumberField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-
-        jLabel39.setText("Date Today");
-
-        checkOutEmailField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-
-        checkOutDate.setEditable(false);
-        checkOutDate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        checkOutDate.setForeground(new java.awt.Color(102, 102, 102));
-
-        jLabel40.setText("Indentify Card Type");
-
-        checkOutSelectIndentity.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        checkOutSelectIndentity.setForeground(new java.awt.Color(102, 102, 102));
-        checkOutSelectIndentity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Identity Card...", "National ID", "Passport ID" }));
+        checkOutOfCheckinDateField.setEditable(false);
+        checkOutOfCheckinDateField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        checkOutOfCheckinDateField.setForeground(new java.awt.Color(102, 102, 102));
 
         jLabel41.setText("Customer Name");
 
-        jLabel42.setText("Room Number");
+        jLabel42.setText("Search Room Number");
 
-        jLabel43.setText("Price");
+        jLabel43.setText("Price per day");
 
-        jLabel44.setText("Phone Number");
+        checkOutRoomNoField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+
+        checkOutOfCheckoutDateField.setEditable(false);
+        checkOutOfCheckoutDateField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        checkOutOfCheckoutDateField.setForeground(new java.awt.Color(102, 102, 102));
+
+        checkOutTotalPriceField.setEditable(false);
+        checkOutTotalPriceField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        checkOutTotalPriceField.setForeground(new java.awt.Color(102, 102, 102));
+
+        checkOutTotalDayField.setEditable(false);
+        checkOutTotalDayField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        checkOutTotalDayField.setForeground(new java.awt.Color(102, 102, 102));
+
+        jLabel32.setText("CheckOut Date");
+
+        checkOutSearchRoomNoBut.setBackground(new java.awt.Color(102, 153, 255));
+        checkOutSearchRoomNoBut.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        checkOutSearchRoomNoBut.setForeground(new java.awt.Color(255, 255, 255));
+        checkOutSearchRoomNoBut.setText("Search");
+        checkOutSearchRoomNoBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkOutSearchRoomNoButActionPerformed(evt);
+            }
+        });
+
+        jLabel34.setText("Total Days of Stay");
+
+        jLabel35.setText("Total Price");
+
+        checkOutChangeField.setEditable(false);
+        checkOutChangeField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        checkOutChangeField.setForeground(new java.awt.Color(102, 102, 102));
+
+        checkOutAmountGetField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        checkOutAmountGetField.setForeground(new java.awt.Color(102, 102, 102));
+        checkOutAmountGetField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkOutAmountGetFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel36.setText("Amount get from customer");
+
+        jLabel37.setText("Change");
+
+        checkOutPhoneNumberField.setEditable(false);
+        checkOutPhoneNumberField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        checkOutPhoneNumberField.setForeground(new java.awt.Color(102, 102, 102));
+
+        jLabel38.setText("Phone Number");
+
+        checkOutEmailField.setEditable(false);
+        checkOutEmailField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        checkOutEmailField.setForeground(new java.awt.Color(102, 102, 102));
+
+        jLabel40.setText("Email");
 
         javax.swing.GroupLayout customerCheckOutLayout = new javax.swing.GroupLayout(customerCheckOut);
         customerCheckOut.setLayout(customerCheckOutLayout);
@@ -1329,115 +1350,137 @@ public class MainDashboard extends javax.swing.JFrame {
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(customerCheckOutLayout.createSequentialGroup()
                         .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel33)
                             .addGroup(customerCheckOutLayout.createSequentialGroup()
                                 .addComponent(checkOutSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(checkOutSearchBut)
+                                .addComponent(checkOutSearchNameBut)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(checkOutClearSearchBut)))
+                                .addComponent(checkOutClearSearchBut))
+                            .addComponent(jLabel33))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(customerCheckOutLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(41, 41, 41)
+                .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(checkOutPhoneNumberField)
                     .addGroup(customerCheckOutLayout.createSequentialGroup()
-                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(checkOutSelectIndentity, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel44, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkOutNameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
                         .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkOutEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel43)
+                            .addComponent(checkOutRoomPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel34)
-                            .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel35)
-                                .addComponent(jLabel36)
-                                .addComponent(checkOutNationalityField)
-                                .addComponent(checkOutNationalID, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(checkOutPhoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel40))
+                            .addComponent(checkOutTotalDayField, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(customerCheckOutLayout.createSequentialGroup()
+                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(customerCheckOutLayout.createSequentialGroup()
+                                .addComponent(jLabel42)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(checkOutRoomNoField))
+                        .addGap(18, 18, 18)
+                        .addComponent(checkOutSearchRoomNoBut))
+                    .addComponent(jLabel38))
                 .addGap(18, 18, 18)
                 .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel38)
-                    .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(customerCheckOutLayout.createSequentialGroup()
+                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel36)
+                            .addComponent(checkOutAmountGetField, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(customerCheckOutLayout.createSequentialGroup()
+                                .addComponent(jLabel37)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(checkOutChangeField)))
+                    .addGroup(customerCheckOutLayout.createSequentialGroup()
+                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkOutOfCheckinDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel39))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE))
+                    .addGroup(customerCheckOutLayout.createSequentialGroup()
+                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel41)
+                            .addComponent(checkOutNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(customerCheckOutLayout.createSequentialGroup()
                             .addComponent(checkInClearTextBut1)
-                            .addGap(18, 18, 18)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(checkOutBut))
-                        .addGroup(customerCheckOutLayout.createSequentialGroup()
-                            .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(checkOutSelectBedType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(checkOutDate, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel39, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(checkOutSelectRoomType, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(checkOutRoomPrice)
-                                .addComponent(jLabel43)
-                                .addComponent(jLabel42)
-                                .addComponent(checkOutSelectRoomNum, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(38, Short.MAX_VALUE))
+                        .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(checkOutOfCheckoutDateField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                        .addComponent(checkOutTotalPriceField, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jLabel32)
+                    .addComponent(checkOutEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel40))
+                .addGap(47, 47, 47))
         );
         customerCheckOutLayout.setVerticalGroup(
             customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerCheckOutLayout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel41)
-                    .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel34)
-                        .addComponent(jLabel39)
-                        .addComponent(jLabel42)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(customerCheckOutLayout.createSequentialGroup()
-                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel35)
-                            .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(checkOutNationalityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(checkOutSelectRoomType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(checkOutRoomPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(customerCheckOutLayout.createSequentialGroup()
-                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(checkOutNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(checkOutEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(checkOutDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(checkOutSelectRoomNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel44)
-                            .addComponent(jLabel43))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(checkOutPhoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(customerCheckOutLayout.createSequentialGroup()
-                        .addComponent(jLabel40)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(checkOutSelectIndentity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(customerCheckOutLayout.createSequentialGroup()
-                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel36)
-                            .addComponent(jLabel38))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(checkOutNationalID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(checkOutSelectBedType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 18, Short.MAX_VALUE)
                 .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(checkOutBut, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(checkInClearTextBut1))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel33)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerCheckOutLayout.createSequentialGroup()
+                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(customerCheckOutLayout.createSequentialGroup()
+                                .addComponent(jLabel40)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(checkOutEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(customerCheckOutLayout.createSequentialGroup()
+                                .addComponent(jLabel41)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(checkOutNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(checkOutSearchRoomNoBut)))
+                            .addGroup(customerCheckOutLayout.createSequentialGroup()
+                                .addComponent(jLabel42)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(checkOutRoomNoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel39, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel38, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel32, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerCheckOutLayout.createSequentialGroup()
+                                .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel36)
+                                    .addComponent(jLabel37))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(checkOutAmountGetField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(checkOutChangeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(checkOutTotalPriceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerCheckOutLayout.createSequentialGroup()
+                                .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(checkOutPhoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(checkOutOfCheckinDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(checkOutOfCheckoutDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel43)
+                                    .addComponent(jLabel34))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(checkOutRoomPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(checkOutTotalDayField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerCheckOutLayout.createSequentialGroup()
+                                .addComponent(jLabel35)
+                                .addGap(37, 37, 37)))
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel33)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerCheckOutLayout.createSequentialGroup()
+                        .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(checkInClearTextBut1)
+                            .addComponent(checkOutBut))
+                        .addGap(14, 14, 14)))
                 .addGroup(customerCheckOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkOutSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkOutSearchBut)
+                    .addComponent(checkOutSearchNameBut)
                     .addComponent(checkOutClearSearchBut))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1476,12 +1519,10 @@ public class MainDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_X_CloseMouseClicked
 
     private void customerCheckIn() {
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-mm-dd");
-        Calendar calendar=Calendar.getInstance();
-        checkInDate.setText(simpleDateFormat.format(calendar.getTime()));
+        customerRecord.dateToday(checkInDate);
         checkInSelectRoomNum.removeAllItems();
         checkInRoomPrice.setText("");
-        customer_CheckIn.roomDetail(checkInSelectRoomType, checkInSelectBedType, checkInSelectRoomNum, checkInRoomPrice);
+        customerRecord.roomDetail(checkInSelectRoomType, checkInSelectBedType, checkInSelectRoomNum, checkInRoomPrice);
     }
 
 
@@ -1528,7 +1569,7 @@ public class MainDashboard extends javax.swing.JFrame {
         bookingBut.setBackground(new Color(102, 153, 255));
         bookingBut.setForeground(Color.WHITE);
         jTabbedPane1.setSelectedIndex(4);
-        
+
     }//GEN-LAST:event_customerCheckInButMouseClicked
 
     private void customerCheckOutButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerCheckOutButMouseClicked
@@ -1548,7 +1589,7 @@ public class MainDashboard extends javax.swing.JFrame {
         bookingBut.setBackground(new Color(102, 153, 255));
         bookingBut.setForeground(Color.WHITE);
         jTabbedPane1.setSelectedIndex(5);
-        
+
     }//GEN-LAST:event_customerCheckOutButMouseClicked
 
     private void historyButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historyButMouseClicked
@@ -1768,18 +1809,6 @@ public class MainDashboard extends javax.swing.JFrame {
         customerCheckIn();
     }//GEN-LAST:event_checkInSelectBedTypeActionPerformed
 
-    private void checkOutSelectRoomTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutSelectRoomTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkOutSelectRoomTypeActionPerformed
-
-    private void checkOutSelectBedTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutSelectBedTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkOutSelectBedTypeActionPerformed
-
-    private void checkOutSelectRoomNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutSelectRoomNumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkOutSelectRoomNumActionPerformed
-
     private void checkInSelectRoomNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkInSelectRoomNumActionPerformed
         // TODO add your handling code here:
         query = "SELECT * FROM `room_manager` WHERE `room_no`=" + checkInSelectRoomNum.getSelectedItem();
@@ -1792,14 +1821,49 @@ public class MainDashboard extends javax.swing.JFrame {
                 checkInRoomPrice.setText(resultSet.getString(5));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerCheckIn.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_checkInSelectRoomNumActionPerformed
 
     private void checkInButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkInButActionPerformed
         // TODO add your handling code here:
-        customer_CheckIn.addCheckIn(checkInEmailField, checkinNameField, checkInPhoneNumberField, checkInNationalityField, checkInSelectIndentity, checkInNationalID, checkInDate, checkInSelectRoomType, checkInSelectBedType, checkInSelectRoomNum, checkInRoomPrice);
+        customerRecord.addCheckIn(checkinNameField, checkInEmailField, checkInPhoneNumberField, checkInNationalityField, checkInSelectIndentity, checkInNationalID, checkInDate, checkInSelectRoomType, checkInSelectBedType, checkInSelectRoomNum, checkInRoomPrice);
     }//GEN-LAST:event_checkInButActionPerformed
+
+    private void checkOutSearchRoomNoButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutSearchRoomNoButActionPerformed
+        // TODO add your handling code here:
+        customerRecord.dateToday(checkOutOfCheckoutDateField);
+        customerRecord.checkCustomer(checkOutRoomNoField, checkOutNameField, checkOutEmailField, checkOutPhoneNumberField, checkOutOfCheckinDateField, checkOutOfCheckoutDateField, checkOutRoomPrice, checkOutTotalDayField, checkOutChangeField, checkOutTotalPriceField);
+    }//GEN-LAST:event_checkOutSearchRoomNoButActionPerformed
+
+    private void checkOutAmountGetFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutAmountGetFieldActionPerformed
+        // TODO add your handling code here:
+
+        if (checkOutTotalPriceField.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "There is no record of room and total price");
+        } else {
+            customerRecord.calChange(checkOutAmountGetField, checkOutTotalPriceField, checkOutChangeField);
+        }
+    }//GEN-LAST:event_checkOutAmountGetFieldActionPerformed
+
+    private void checkInClearTextBut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkInClearTextBut1ActionPerformed
+        // TODO add your handling code here:
+        checkOutRoomNoField.setText("");
+        checkOutNameField.setText("");
+        checkOutOfCheckinDateField.setText("");
+        checkOutOfCheckoutDateField.setText("");
+        checkOutRoomPrice.setText("");
+        checkOutTotalDayField.setText("");
+        checkOutAmountGetField.setText("");
+        checkOutChangeField.setText("");
+        checkOutTotalPriceField.setText("");
+    }//GEN-LAST:event_checkInClearTextBut1ActionPerformed
+
+    private void checkOutButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutButActionPerformed
+        // TODO add your handling code here:
+        customerRecord.checkOut(checkOutRoomNoField, checkOutOfCheckoutDateField, checkOutTotalDayField, checkOutAmountGetField, checkOutChangeField, checkOutTotalPriceField);
+        customerRecord.invoid(checkOutRoomNoField, checkOutNameField, checkOutEmailField, checkOutPhoneNumberField, checkOutOfCheckinDateField, checkOutOfCheckoutDateField, checkOutRoomPrice, checkOutTotalDayField, checkOutAmountGetField, checkOutChangeField, checkOutTotalPriceField);
+    }//GEN-LAST:event_checkOutButActionPerformed
 
     private int x, y;
 
@@ -1855,21 +1919,22 @@ public class MainDashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> checkInSelectIndentity;
     private javax.swing.JComboBox<String> checkInSelectRoomNum;
     private javax.swing.JComboBox<String> checkInSelectRoomType;
+    private javax.swing.JTextField checkOutAmountGetField;
     private javax.swing.JButton checkOutBut;
+    private javax.swing.JTextField checkOutChangeField;
     private javax.swing.JButton checkOutClearSearchBut;
-    private javax.swing.JTextField checkOutDate;
     private javax.swing.JTextField checkOutEmailField;
     private javax.swing.JTextField checkOutNameField;
-    private javax.swing.JTextField checkOutNationalID;
-    private javax.swing.JTextField checkOutNationalityField;
+    private javax.swing.JTextField checkOutOfCheckinDateField;
+    private javax.swing.JTextField checkOutOfCheckoutDateField;
     private javax.swing.JTextField checkOutPhoneNumberField;
+    private javax.swing.JTextField checkOutRoomNoField;
     private javax.swing.JTextField checkOutRoomPrice;
-    private javax.swing.JButton checkOutSearchBut;
     private javax.swing.JTextField checkOutSearchField;
-    private javax.swing.JComboBox<String> checkOutSelectBedType;
-    private javax.swing.JComboBox<String> checkOutSelectIndentity;
-    private javax.swing.JComboBox<String> checkOutSelectRoomNum;
-    private javax.swing.JComboBox<String> checkOutSelectRoomType;
+    private javax.swing.JButton checkOutSearchNameBut;
+    private javax.swing.JButton checkOutSearchRoomNoBut;
+    private javax.swing.JTextField checkOutTotalDayField;
+    private javax.swing.JTextField checkOutTotalPriceField;
     private javax.swing.JTextField checkinNameField;
     private javax.swing.JButton clearBut;
     private javax.swing.JPanel customerCheckIn;
@@ -1913,6 +1978,7 @@ public class MainDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
@@ -1925,7 +1991,6 @@ public class MainDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
