@@ -23,6 +23,8 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -39,6 +41,7 @@ public class CustomerRecord {
     private int ID, totalPrice, getMoney, totalDay, change;
     private String checkOutDate;
     private PreparedStatement pst;
+    private DefaultTableModel model;
 
     public void dateToday(JTextField jTextField) {
         SimpleDateFormat myFormat = new SimpleDateFormat("dd-MMMM-yyyy");
@@ -222,7 +225,7 @@ public class CustomerRecord {
         String patch = "C:\\Users\\Desktop-Desk\\Documents\\NetBeansProjects\\HotelManagement\\invoid\\";
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
         try {
-            PdfWriter.getInstance(doc, new FileOutputStream(patch + ID + ".pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream(patch + nameField.getText() + " " + checkOutDateField.getText() + ".pdf"));
             doc.open();
             Paragraph paragraph1 = new Paragraph("                                                        Hotel Management System");
             doc.add(paragraph1);
@@ -257,15 +260,127 @@ public class CustomerRecord {
 
             if ((new File(patch + nameField.getText() + " " + checkOutDateField.getText() + ".pdf")).exists()) {
                 try {
-                    Process process = Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler " + patch + ID + ".pdf");
+                    Process process = Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler " + patch + nameField.getText() + " " + checkOutDateField.getText() + ".pdf");
                 } catch (IOException ex) {
                     Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 System.out.println("File is not Exits");
             }
-
         }
+    }
 
+    public void showCustomerInfo(JTable jTable) {
+        query = "SELECT * FROM `customer` WHERE `total_price` IS NULL";
+        resultSet = connectionProvider.getResultSet(query);
+        model = (DefaultTableModel) jTable.getModel();
+        model.setRowCount(0);
+        try {
+            while (resultSet.next()) {
+
+                model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2), resultSet.getString(4), resultSet.getString(5),
+                    resultSet.getString(6), resultSet.getString(7), resultSet.getString(8), resultSet.getString(11), resultSet.getString(9), resultSet.getString(10), resultSet.getString(12)});
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+        }
+    }
+
+    public void searchCustomer(JTextField jTextField, JTable jTable) {
+        query = "SELECT * FROM `customer` WHERE `name`='" + jTextField.getText() + "' AND `total_price` IS NULL";
+        resultSet = connectionProvider.getResultSet(query);
+        model = (DefaultTableModel) jTable.getModel();
+        model.setRowCount(0);
+        try {
+            while (resultSet.next()) {
+                model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2), resultSet.getString(4), resultSet.getString(5),
+                    resultSet.getString(6), resultSet.getString(7), resultSet.getString(8), resultSet.getString(11), resultSet.getString(9), resultSet.getString(10), resultSet.getString(12)});
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+        }
+    }
+
+    public void showCustomerHistory(JTable jTable) {
+        query = "SELECT * FROM `customer` WHERE `total_price` IS NOT NULL";
+        resultSet = connectionProvider.getResultSet(query);
+        model = (DefaultTableModel) jTable.getModel();
+        model.setRowCount(0);
+        try {
+            while (resultSet.next()) {
+                model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2), resultSet.getString(4), resultSet.getString(11),
+                    resultSet.getString(9), resultSet.getString(10), resultSet.getString(12), resultSet.getString(8), resultSet.getString(13), resultSet.getString(14),
+                    resultSet.getString(16), resultSet.getString(17), resultSet.getString(15)});
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+        }
+    }
+
+    public void searchCustomerHistory(JTextField jTextField, JTable jTable) {
+        query = "SELECT * FROM `customer` WHERE `name`='" + jTextField.getText() + "' AND `total_price` IS NOT NULL";
+        resultSet = connectionProvider.getResultSet(query);
+        model = (DefaultTableModel) jTable.getModel();
+        model.setRowCount(0);
+        try {
+            while (resultSet.next()) {
+                model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2), resultSet.getString(4), resultSet.getString(11),
+                    resultSet.getString(9), resultSet.getString(10), resultSet.getString(12), resultSet.getString(8), resultSet.getString(13), resultSet.getString(14),
+                    resultSet.getString(16), resultSet.getString(17), resultSet.getString(15)});
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+        }
+    }
+
+    public void printInvoid(JTable jTable) {
+        String patch = "C:\\Users\\Desktop-Desk\\Documents\\NetBeansProjects\\HotelManagement\\invoid\\";
+        com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
+        int row = jTable.getSelectedRow();
+        String cell = jTable.getModel().getValueAt(row, 0).toString();
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream(patch + jTable.getModel().getValueAt(row, 0).toString() + " " + jTable.getModel().getValueAt(row, 1).toString() + ".pdf"));
+            doc.open();
+            Paragraph paragraph1 = new Paragraph("                                                        Hotel Management System");
+            doc.add(paragraph1);
+            Paragraph paragraph2 = new Paragraph("*********************************************************************************************************");
+            doc.add(paragraph2);
+            Paragraph paragraph3 = new Paragraph("Customer ID: " + jTable.getModel().getValueAt(row, 0).toString() + "\nCustomer Detail:::\n\tName: " + jTable.getModel().getValueAt(row, 1).toString() + "\n\tEmail: " + jTable.getModel().getValueAt(row, 2).toString() + "\n\tPhone Number: " + jTable.getModel().getValueAt(row, 3).toString());
+            doc.add(paragraph3);
+            doc.add(paragraph2);
+            Paragraph paragraph5 = new Paragraph("Room Detail:::\n\tRoom Number: " + jTable.getModel().getValueAt(row, 4).toString() + "\n\tRoom Type: " + jTable.getModel().getValueAt(row, 5).toString() + "\n\tBed Type: " + jTable.getModel().getValueAt(row, 6).toString() + "\n\tPrice per day: " + jTable.getModel().getValueAt(row, 7).toString());
+            doc.add(paragraph5);
+            doc.add(paragraph2);
+            final PdfPTable tb = new PdfPTable(6);
+            tb.addCell("Checkin Date: " + jTable.getModel().getValueAt(row, 8).toString());
+            tb.addCell("Checkout Date: " + jTable.getModel().getValueAt(row, 9).toString());
+            tb.addCell("Total days of stay: " + jTable.getModel().getValueAt(row, 10).toString());
+            tb.addCell("Total money get from customer: " + jTable.getModel().getValueAt(row, 11).toString());
+            tb.addCell("Change: " + jTable.getModel().getValueAt(row, 12).toString());
+            tb.addCell("Total paid: " + jTable.getModel().getValueAt(row, 13).toString());
+            doc.add(tb);
+            doc.add(paragraph2);
+            Paragraph paragraph6 = new Paragraph("Thank You Please Visit Us Again Next Time");
+            doc.add(paragraph6);
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        doc.close();
+        int a = JOptionPane.showConfirmDialog(null, "Do you want to print the bill invoid?", "Select", JOptionPane.YES_NO_OPTION);
+        if (a == 0) {
+
+            if ((new File(patch + jTable.getModel().getValueAt(row, 0).toString() + " " + jTable.getModel().getValueAt(row, 1).toString() + ".pdf")).exists()) {
+                try {
+                    Process process = Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler " + patch + jTable.getModel().getValueAt(row, 0).toString() + " " + jTable.getModel().getValueAt(row, 1).toString() + ".pdf");
+                } catch (IOException ex) {
+                    Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                System.out.println("File is not Exits");
+            }
+        }
     }
 }

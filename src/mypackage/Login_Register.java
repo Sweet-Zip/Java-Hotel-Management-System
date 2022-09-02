@@ -40,7 +40,6 @@ public class Login_Register extends javax.swing.JFrame {
         setUndecorated(true);
 
         panelLoginRegister1.setMinimumSize(new java.awt.Dimension(660, 971));
-        panelLoginRegister1.setPreferredSize(new java.awt.Dimension(660, 971));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -52,7 +51,7 @@ public class Login_Register extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelLoginRegister1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelLoginRegister1, javax.swing.GroupLayout.PREFERRED_SIZE, 815, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

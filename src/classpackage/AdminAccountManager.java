@@ -80,23 +80,18 @@ public class AdminAccountManager {
 
     public boolean login(String usernameOrEmailTextField, String passwordField) {
         boolean bool = false;
-        query = "SELECT * FROM `user_login` WHERE `username`=? AND `password`=?";
+        query = "SELECT * FROM `user_login` WHERE (`username`=? OR `email`=?) AND BINARY `password`=?";
         try {
             con = connectionProvider.getCon();
             pst = con.prepareStatement(query);
             pst.setString(1, usernameOrEmailTextField);
-            pst.setString(2, passwordField);
+            pst.setString(2, usernameOrEmailTextField);
+            pst.setString(3, passwordField);
             resultSet = pst.executeQuery();
-
-            con = connectionProvider.getCon();
-            pstE = con.prepareStatement("SELECT * FROM `user_login` WHERE `email`=? AND `password`=?");
-            pstE.setString(1, usernameOrEmailTextField);
-            pstE.setString(2, passwordField);
-            resultSetE = pstE.executeQuery();
             if (resultSet.next()) {
                 bool = true;
-            } else if (resultSetE.next()) {
-                bool = true;
+            } else {
+                bool = false;
             }
         } catch (SQLException ex) {
             Logger.getLogger(Login_Register.class.getName()).log(Level.SEVERE, null, ex);
