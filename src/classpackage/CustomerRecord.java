@@ -97,7 +97,7 @@ public class CustomerRecord {
         price = priceField.getText();
         try {
             if (!price.equals("")) {
-                query = "update room_manager set `status`='Booked' WHERE room_no=" + roomNumber;
+                query = "update room_manager set `status`='Booked' WHERE room_no='" + roomNumber + "'";
                 con = connectionProvider.getCon();
                 pst = con.prepareStatement(query);
                 pst.executeUpdate();
@@ -128,7 +128,7 @@ public class CustomerRecord {
             JTextField pricePerDayField, JTextField totalDayField, JTextField changeField, JTextField totalPriceField) {
 
         roomNumber = roomNoField.getText();
-        query = "SELECT * FROM `customer` WHERE `room_no`=" + roomNumber + " AND `checkout_date` is NULL";
+        query = "SELECT * FROM `customer` WHERE `room_no`='" + roomNumber + "' AND `checkout_date` IS NULL";
         resultSet = connectionProvider.getResultSet(query);
 
         try {
@@ -231,7 +231,7 @@ public class CustomerRecord {
             doc.add(paragraph1);
             Paragraph paragraph2 = new Paragraph("*********************************************************************************************************");
             doc.add(paragraph2);
-            Paragraph paragraph3 = new Paragraph("Customer ID: " + ID + "\nCustomer Detail:::\n\tName: " + nameField.getText() + "\n\tEmail: " + emailField.getText() + "\n\tPhone Number: " + phoneNumberField.getText());
+            Paragraph paragraph3 = new Paragraph("Customer Detail:::\n\tName: " + nameField.getText() + "\n\tEmail: " + emailField.getText() + "\n\tPhone Number: " + phoneNumberField.getText());
             doc.add(paragraph3);
             doc.add(paragraph2);
             Paragraph paragraph5 = new Paragraph("Room Detail:::\n\tRoom Number: " + roomNoField.getText() /*+ "\n\tRoom Type: " + resultSet.getString(9) + "\n\tBed Type: " + resultSet.getString(10)*/ + "\n\tPrice per day: " + pricePerDayField.getText());
@@ -287,18 +287,24 @@ public class CustomerRecord {
     }
 
     public void searchCustomer(JTextField jTextField, JTable jTable) {
-        query = "SELECT * FROM `customer` WHERE `name`='" + jTextField.getText() + "' AND `total_price` IS NULL";
+        query = "SELECT * FROM `customer` WHERE `name` like '%" + jTextField.getText() + "%' AND `total_price` IS NULL";
         resultSet = connectionProvider.getResultSet(query);
         model = (DefaultTableModel) jTable.getModel();
-        model.setRowCount(0);
-        try {
-            while (resultSet.next()) {
-                model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2), resultSet.getString(4), resultSet.getString(5),
-                    resultSet.getString(6), resultSet.getString(7), resultSet.getString(8), resultSet.getString(11), resultSet.getString(9), resultSet.getString(10), resultSet.getString(12)});
+        
+        if (jTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Input customer name to search...");
+        } else {
+            try {
+                model.setRowCount(0);
+                while (resultSet.next()) {
+                    model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2), resultSet.getString(4), resultSet.getString(5),
+                        resultSet.getString(6), resultSet.getString(7), resultSet.getString(8), resultSet.getString(11), resultSet.getString(9), resultSet.getString(10), resultSet.getString(12)});
+                }
+                resultSet.close();
+            } catch (SQLException e) {
             }
-            resultSet.close();
-        } catch (SQLException e) {
         }
+
     }
 
     public void showCustomerHistory(JTable jTable) {
@@ -318,11 +324,15 @@ public class CustomerRecord {
     }
 
     public void searchCustomerHistory(JTextField jTextField, JTable jTable) {
-        query = "SELECT * FROM `customer` WHERE `name`='" + jTextField.getText() + "' AND `total_price` IS NOT NULL";
+        query = "SELECT * FROM `customer` WHERE `name` like '%" + jTextField.getText() + "%' AND `total_price` IS NOT NULL";
         resultSet = connectionProvider.getResultSet(query);
         model = (DefaultTableModel) jTable.getModel();
-        model.setRowCount(0);
-        try {
+        
+        if (jTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Input customer name to search...");
+        } else {
+            model.setRowCount(0);
+            try {
             while (resultSet.next()) {
                 model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2), resultSet.getString(4), resultSet.getString(11),
                     resultSet.getString(9), resultSet.getString(10), resultSet.getString(12), resultSet.getString(8), resultSet.getString(13), resultSet.getString(14),
@@ -331,13 +341,14 @@ public class CustomerRecord {
             resultSet.close();
         } catch (SQLException e) {
         }
+        }
+        
     }
 
     public void printInvoid(JTable jTable) {
         String patch = "C:\\Users\\Desktop-Desk\\Documents\\NetBeansProjects\\HotelManagement\\invoid\\";
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
         int row = jTable.getSelectedRow();
-        String cell = jTable.getModel().getValueAt(row, 0).toString();
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(patch + jTable.getModel().getValueAt(row, 0).toString() + " " + jTable.getModel().getValueAt(row, 1).toString() + ".pdf"));
             doc.open();

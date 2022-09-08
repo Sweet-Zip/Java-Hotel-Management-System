@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Lib/itextpdf-5.5.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Lib/KGradientPanel.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Lib/panel-round.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Lib/java-jpanel-round-border-main.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Lib/flatlaf-demo-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Lib/mysql-connector-java-8.0.30.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

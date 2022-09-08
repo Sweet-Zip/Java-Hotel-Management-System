@@ -4,10 +4,10 @@
  */
 package jpanelpackage;
 
+import jframepackage.Login_Register;
 import classpackage.AdminAccount;
 import classpackage.AdminAccountManager;
 import classpackage.ConnectionProvider;
-import mypackage.*;
 
 import java.awt.Color;
 import java.awt.Component;

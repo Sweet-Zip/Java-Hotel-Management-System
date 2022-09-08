@@ -5,9 +5,7 @@
 package classpackage;
 
 import java.awt.HeadlessException;
-import java.beans.Statement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,8 +17,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import jpanelpackage.forgetPasswordJPanel;
-import mypackage.Login_Register;
-import mypackage.MainDashboard;
+import jframepackage.Login_Register;
+import jframepackage.MainDashboard;
 
 /**
  *
@@ -29,9 +27,9 @@ import mypackage.MainDashboard;
 public class AdminAccountManager {
 
     private String query;
-    private PreparedStatement pst, pstE;
+    private PreparedStatement pst;
     private Connection con;
-    private ResultSet resultSet, resultSetE;
+    private ResultSet resultSet;
     private static final int PASSWORD_LENGTH = 8;
     ConnectionProvider connectionProvider = new ConnectionProvider();
 
@@ -80,13 +78,15 @@ public class AdminAccountManager {
 
     public boolean login(String usernameOrEmailTextField, String passwordField) {
         boolean bool = false;
-        query = "SELECT * FROM `user_login` WHERE (`username`=? OR `email`=?) AND BINARY `password`=?";
+        query = "SELECT * FROM `user_login` WHERE ((Lower(`username`)=? OR Lower(`email`)=?) OR `username`=? OR `email`=?) AND `password`=?";
         try {
             con = connectionProvider.getCon();
             pst = con.prepareStatement(query);
             pst.setString(1, usernameOrEmailTextField);
             pst.setString(2, usernameOrEmailTextField);
-            pst.setString(3, passwordField);
+            pst.setString(3, usernameOrEmailTextField);
+            pst.setString(4, usernameOrEmailTextField);
+            pst.setString(5, passwordField);
             resultSet = pst.executeQuery();
             if (resultSet.next()) {
                 bool = true;
@@ -183,21 +183,17 @@ public class AdminAccountManager {
     public void searchStaff(JTable jTable, JTextField jTextField) {
         try {
             String emailOrUsername = jTextField.getText();
-            query = "SELECT * FROM `user_login` WHERE `email` like '%" + emailOrUsername + "%' or `email` like'%" + emailOrUsername + "%' ";
+            query = "SELECT * FROM `user_login` WHERE `email` like '%" + emailOrUsername + "%' OR `email` like'%" + emailOrUsername + "%' ";
             resultSet = connectionProvider.getResultSet(query);
             DefaultTableModel model = (DefaultTableModel) jTable.getModel();
             if (jTextField.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Input username or email");
-            }
+            } 
             model.setRowCount(0);
             while (resultSet.next()) {
-                resultSet.getInt(1);
-                resultSet.getString(2);
-                resultSet.getString(3);
                 model.addRow(new Object[]{resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getLong(6), resultSet.getString(7), resultSet.getString(8), resultSet.getLong(9), resultSet.getString(11)});
             }
             resultSet.close();
-
         } catch (SQLException ex) {
             Logger.getLogger(MainDashboard.class
                     .getName()).log(Level.SEVERE, null, ex);

@@ -4,7 +4,7 @@
  */
 package jpanelpackage;
 
-import mypackage.*;
+import jframepackage.ForgetPassword;
 import classpackage.*;
 
 import java.awt.Graphics;
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import mypackage.MainDashboard;
+import jframepackage.MainDashboard;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;

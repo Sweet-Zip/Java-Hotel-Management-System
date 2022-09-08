@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import mypackage.MainDashboard;
+import jframepackage.MainDashboard;
 
 /**
  *
@@ -74,7 +74,7 @@ public class RoomManager {
     public void searchRoom(JTextField searchRoomTextField, JTable jTable) {
         try {
             String roomNoSearch = searchRoomTextField.getText();
-            query = "SELECT * FROM `room_manager` WHERE `room_no` like '%" + roomNoSearch + "%' ";
+            query = "SELECT * FROM `room_manager` WHERE `room_no` = '" + roomNoSearch + "' ";
             resultSet = connectionProvider.getResultSet(query);
             model = (DefaultTableModel) jTable.getModel();
             if (searchRoomTextField.getText().equals("")) {
@@ -82,13 +82,7 @@ public class RoomManager {
             }
             model.setRowCount(0);
             while (resultSet.next()) {
-                roomNumber = resultSet.getInt(1);
-                roomType = resultSet.getString(2);
-                bedType = resultSet.getString(3);
-                price = resultSet.getInt(4);
-                status = resultSet.getString(5);
-
-                model.addRow(new Object[]{roomNumber, roomType, bedType, price, status});
+                model.addRow(new Object[]{resultSet.getInt(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5), resultSet.getString(6)});
             }
             resultSet.close();
 

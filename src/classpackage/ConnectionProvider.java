@@ -21,8 +21,8 @@ public class ConnectionProvider {
 
     public Connection getCon() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/hotel", "root", "");
+            Class.forName("org.sqlite.JDBC");
+            con = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Desktop-Desk\\Desktop\\data.sqlite");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectionProvider.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
