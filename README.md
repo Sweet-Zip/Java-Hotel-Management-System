@@ -15,4 +15,4 @@
   6. And a lots more
   
   
-## Note:::: in order to use this program you need to include all libraries that store in lib folder 📂 and xampp mysql
+## Note:::: in order to use this program you need to include all libraries that store in lib folder 📂 and sqlite3 to run database
