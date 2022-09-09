@@ -7,7 +7,6 @@ package classpackage;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
-
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -60,7 +59,7 @@ public class CustomerRecord {
 
                 roomNum.addItem(resultSet.getInt(2));
             }
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

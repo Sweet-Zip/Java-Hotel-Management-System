@@ -1916,19 +1916,16 @@ public class MainDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_searchButActionPerformed
 
     private void availableRoomTable() {
-        RoomManager roomManager = new RoomManager();
         roomManager.availableRoomTable(availableTable);
     }
 
     private void notAvailableRoomTable() {
-        RoomManager roomManager = new RoomManager();
         roomManager.notAvailableRoomTable(notAvailableTable);
     }
 
     public void roomManagerTableData() {
         deleteRoomBut.setEnabled(false);
         editRoomBut.setEnabled(false);
-        RoomManager roomManager = new RoomManager();
         roomManager.showAllRoom(roomTableManage);
     }
 

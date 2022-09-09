@@ -4,8 +4,6 @@
  */
 package classpackage;
 
-import java.math.BigInteger;
-
 /**
  *
  * @author Desktop-Desk

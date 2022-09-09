@@ -6,28 +6,18 @@ package jpanelpackage;
 
 import jframepackage.ForgetPassword;
 import classpackage.*;
-
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.sql.*;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import jframepackage.MainDashboard;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.math.BigInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,14 +43,9 @@ public class loginRegisterPanel extends javax.swing.JPanel {
 
     }
 
-    private Connection con;
-    private PreparedStatement pst;
-    private ResultSet resultset, resultSetE;
-    private PreparedStatement pste;
     private Border defualt_Top_Border = BorderFactory.createMatteBorder(2, 0, 0, 0, new Color(3, 138, 255));
     private Border red_Top_Border = BorderFactory.createMatteBorder(2, 0, 0, 0, new Color(226, 130, 54));
     private Border textField_Border = BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(8, 14, 44));
-    private String query;
     AdminAccountManager adminAccountManager = new AdminAccountManager();
 
     /**
