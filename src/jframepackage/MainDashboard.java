@@ -455,9 +455,16 @@ public class MainDashboard extends javax.swing.JFrame {
                 "Room No", "Room Type", "Bed", "Price"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -481,9 +488,16 @@ public class MainDashboard extends javax.swing.JFrame {
                 "Room No", "Room Type", "Bed", "Price"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -578,9 +592,16 @@ public class MainDashboard extends javax.swing.JFrame {
                 "Room ID", "Room Number", "Room Type", "Bed", "Price", "Status"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -990,12 +1011,19 @@ public class MainDashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Name", "Email", "Phone Number", "Nationality", "Indentify Card", "National ID", "Check in Date", "Room Number", "Room", "Bed", "Price/Night"
+                "ID", "Name", "Email", "Phone Number", "Nationality", "Indentify Card", "National ID", "Check in Date", "Room Number", "Room Type", "Bed", "Price/Night"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -1290,6 +1318,7 @@ public class MainDashboard extends javax.swing.JFrame {
         customerHistorySearchField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         customerHistorySearchField.setForeground(new java.awt.Color(102, 102, 102));
 
+        customerHistoryTable.setAutoCreateRowSorter(true);
         customerHistoryTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         customerHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1299,9 +1328,16 @@ public class MainDashboard extends javax.swing.JFrame {
                 "ID", "Name", "Email", "Phone Number", "Room Numer", "RoomType", "Bed Type", "Price/Day", "Checkin Date", "Checkout Date", "Total Day", "Customer Money", "Change", "Total Paid"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Long.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -1384,10 +1420,10 @@ public class MainDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel44)
                     .addComponent(customerHistoryClearBut))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(customerHistoryPrintInvoidBut)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab7", customerHistory);
@@ -1406,9 +1442,16 @@ public class MainDashboard extends javax.swing.JFrame {
                 "ID", "Email", "First Name", "Last Name", "Username", "Phone Number", "Nationality", "Identity Card Type", "Identity ID", "Address"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Long.class, java.lang.Object.class, java.lang.Object.class, java.lang.Long.class, java.lang.Object.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -1452,7 +1495,7 @@ public class MainDashboard extends javax.swing.JFrame {
         });
 
         deleteStaffBut.setBackground(new java.awt.Color(204, 0, 51));
-        deleteStaffBut.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        deleteStaffBut.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         deleteStaffBut.setForeground(new java.awt.Color(255, 255, 255));
         deleteStaffBut.setText("Delete Staff");
         deleteStaffBut.addActionListener(new java.awt.event.ActionListener() {

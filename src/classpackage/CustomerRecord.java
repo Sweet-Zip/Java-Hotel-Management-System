@@ -9,7 +9,6 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 
 import com.itextpdf.text.pdf.PdfWriter;
-import com.mysql.cj.Query;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -278,8 +277,8 @@ public class CustomerRecord {
         try {
             while (resultSet.next()) {
 
-                model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2), resultSet.getString(4), resultSet.getString(5),
-                    resultSet.getString(6), resultSet.getString(7), resultSet.getString(8), resultSet.getString(11), resultSet.getString(9), resultSet.getString(10), resultSet.getString(12)});
+                model.addRow(new Object[]{resultSet.getInt(1), resultSet.getString(3), resultSet.getString(2), resultSet.getLong(4), resultSet.getString(5),
+                    resultSet.getString(6), resultSet.getLong(7), resultSet.getString(8), resultSet.getInt(11), resultSet.getString(9), resultSet.getString(10), resultSet.getInt(12)});
             }
             resultSet.close();
         } catch (SQLException e) {
@@ -297,8 +296,9 @@ public class CustomerRecord {
             try {
                 model.setRowCount(0);
                 while (resultSet.next()) {
-                    model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2), resultSet.getString(4), resultSet.getString(5),
-                        resultSet.getString(6), resultSet.getString(7), resultSet.getString(8), resultSet.getString(11), resultSet.getString(9), resultSet.getString(10), resultSet.getString(12)});
+                    model.addRow(new Object[]{resultSet.getInt(1), resultSet.getString(3), resultSet.getString(2), resultSet.getLong(4), resultSet.getInt(11),
+                    resultSet.getString(9), resultSet.getString(10), resultSet.getInt(12), resultSet.getString(8), resultSet.getString(13), resultSet.getInt(14),
+                    resultSet.getInt(16), resultSet.getInt(17), resultSet.getInt(15)});
                 }
                 resultSet.close();
             } catch (SQLException e) {
@@ -314,9 +314,9 @@ public class CustomerRecord {
         model.setRowCount(0);
         try {
             while (resultSet.next()) {
-                model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2), resultSet.getString(4), resultSet.getString(11),
-                    resultSet.getString(9), resultSet.getString(10), resultSet.getString(12), resultSet.getString(8), resultSet.getString(13), resultSet.getString(14),
-                    resultSet.getString(16), resultSet.getString(17), resultSet.getString(15)});
+                model.addRow(new Object[]{resultSet.getInt(1), resultSet.getString(3), resultSet.getString(2), resultSet.getLong(4), resultSet.getInt(11),
+                    resultSet.getString(9), resultSet.getString(10), resultSet.getInt(12), resultSet.getString(8), resultSet.getString(13), resultSet.getInt(14),
+                    resultSet.getInt(16), resultSet.getInt(17), resultSet.getInt(15)});
             }
             resultSet.close();
         } catch (SQLException e) {

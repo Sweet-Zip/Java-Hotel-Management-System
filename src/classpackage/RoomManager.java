@@ -22,6 +22,7 @@ import jframepackage.MainDashboard;
  *
  * @author Desktop-Desk
  */
+
 public class RoomManager {
 
     private int roomNumber, price;
