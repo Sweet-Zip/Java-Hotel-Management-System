@@ -42,7 +42,9 @@ public class RoomManager {
         try {
             if (resultSet.next()) {
                 JOptionPane.showMessageDialog(null, "Room" + roomNum.getText() + " already exist");
+                resultSet.close();
             } else {
+                resultSet.close();
                 query = "insert into `room_manager`(room_no, room_type, bed_type, price, status)values(?,?,?,?,?)";
                 roomNumber = Integer.parseInt(roomNum.getText());
                 roomType = roomT.getSelectedItem().toString();
@@ -99,7 +101,7 @@ public class RoomManager {
         roomNumber = Integer.parseInt(roomNum.getText());
         price = Integer.parseInt(priceField.getText());
         roomType = roomT.getSelectedItem().toString();
-        bedType = roomT.getSelectedItem().toString();
+        bedType = bedT.getSelectedItem().toString();
         try {
             con = connectionProvider.getCon();
             int a = JOptionPane.showConfirmDialog(null, "Do you really want to update this room?", "Select", JOptionPane.YES_NO_OPTION);

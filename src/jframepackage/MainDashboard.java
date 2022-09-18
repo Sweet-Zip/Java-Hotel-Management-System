@@ -2003,11 +2003,8 @@ public class MainDashboard extends javax.swing.JFrame {
         } else if (bedType.getSelectedItem().toString().equals("Select Bed Type...") || bedType.getSelectedItem().toString().equals("")) {
             JOptionPane.showMessageDialog(this, "Select Bed Type!");
         } else {
-            int a = JOptionPane.showConfirmDialog(null, "Do you really want to edit this room?", "Select", JOptionPane.YES_NO_OPTION);
-            if (a == 0) {
-                roomManager.editRoom(roomTableManage, roomNumberTextField, roomType, bedType, priceTextField);
-                roomManagerTableData();
-            }
+            roomManager.editRoom(roomTableManage, roomNumberTextField, roomType, bedType, priceTextField);
+            roomManagerTableData();
         }
     }//GEN-LAST:event_editRoomButActionPerformed
 
@@ -2111,6 +2108,7 @@ public class MainDashboard extends javax.swing.JFrame {
         } else {
             checkOutAmountGetFieldActionPerformed(evt);
             customerRecord.checkOut(checkOutRoomNoField, checkOutOfCheckoutDateField, checkOutTotalDayField, checkOutAmountGetField, checkOutChangeField, checkOutTotalPriceField);
+            showCustomerDetail();
             customerRecord.invoid(checkOutRoomNoField, checkOutNameField, checkOutEmailField, checkOutPhoneNumberField, checkOutOfCheckinDateField, checkOutOfCheckoutDateField, checkOutRoomPrice, checkOutTotalDayField, checkOutAmountGetField, checkOutChangeField, checkOutTotalPriceField);
         }
     }//GEN-LAST:event_checkOutButActionPerformed
