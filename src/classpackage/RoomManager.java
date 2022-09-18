@@ -22,7 +22,6 @@ import jframepackage.MainDashboard;
  *
  * @author Desktop-Desk
  */
-
 public class RoomManager {
 
     private int roomNumber, price;
@@ -58,6 +57,7 @@ public class RoomManager {
                     pst.setInt(4, price);
                     pst.setString(5, "Available");
                     pst.executeUpdate();
+                    pst.close();
                     JOptionPane.showMessageDialog(null, "Room has beed added");
                     roomNum.setText("");
                     roomT.setSelectedIndex(0);
@@ -102,18 +102,18 @@ public class RoomManager {
         bedType = roomT.getSelectedItem().toString();
         try {
             con = connectionProvider.getCon();
-
             int a = JOptionPane.showConfirmDialog(null, "Do you really want to update this room?", "Select", JOptionPane.YES_NO_OPTION);
             if (a == 0) {
-
                 pst = con.prepareStatement(query);
                 pst.setInt(1, roomNumber);
                 pst.setString(2, roomType);
                 pst.setString(3, bedType);
                 pst.setInt(4, price);
                 pst.executeUpdate();
+                pst.close();
                 JOptionPane.showMessageDialog(null, "Room has been updated");
             }
+            pst.close();
         } catch (SQLException ex) {
             Logger.getLogger(MainDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -130,8 +130,8 @@ public class RoomManager {
             if (a == 0) {
                 pst.execute();
                 JOptionPane.showMessageDialog(null, "Delete successfuly");
-                pst.close();
             }
+            pst.close();
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -201,11 +201,11 @@ public class RoomManager {
         model.setRowCount(0);
         try {
             while (resultSet.next()) {
-                    roomNumber = resultSet.getInt(2);
-                    roomType = resultSet.getString(3);
-                    bedType = resultSet.getString(4);
-                    price = resultSet.getInt(5);
-                    model.addRow(new Object[]{roomNumber, roomType, bedType, price});
+                roomNumber = resultSet.getInt(2);
+                roomType = resultSet.getString(3);
+                bedType = resultSet.getString(4);
+                price = resultSet.getInt(5);
+                model.addRow(new Object[]{roomNumber, roomType, bedType, price});
             }
             resultSet.close();
         } catch (SQLException e) {

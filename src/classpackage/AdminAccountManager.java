@@ -31,9 +31,11 @@ public class AdminAccountManager {
     private Connection con;
     private ResultSet resultSet;
     private static final int PASSWORD_LENGTH = 8;
+    private String password, securityQuestion, securityAnswer, address, username, email;
+    private int ID;
+    private String firstName, lastName, nationality, identityCard;
+    private long phoneNumber, nationalID;
     ConnectionProvider connectionProvider = new ConnectionProvider();
-
-    AdminAccount adminAccount = new AdminAccount();
 
     public void register(JTextField registerEmailField, JTextField registerFirstNameField, JTextField registerLastNameTextField,
             JTextField registerUsernameField, JTextField registerPhoneNumberTextField, JTextField registerNationalityTextField,
@@ -41,35 +43,37 @@ public class AdminAccountManager {
             JTextField registerAddress, JComboBox registerSecurityQuestionComboBox, JTextField registerAnswerField) {
 
         query = "INSERT INTO `user_login`(`email`, `firstname`, `lastname`, `username`, `phone_number`, `nationality`, `identity_card`, `national_id`, `password`, `address`, `security_question`, `security_answer`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-        adminAccount.setEmail(registerEmailField.getText());
-        adminAccount.setFirstName(registerFirstNameField.getText());
-        adminAccount.setLastName(registerLastNameTextField.getText());
-        adminAccount.setUsername(registerUsernameField.getText());
-        adminAccount.setPhoneNumber(Long.parseLong(registerPhoneNumberTextField.getText()));
-        adminAccount.setIdentityCard(registerIdentityCardOptionComboBox.getSelectedItem().toString());
-        adminAccount.setNationalID(Long.parseLong(registerIdentityIDTextField.getText()));
-        adminAccount.setNationality(registerNationalityTextField.getText());
-        adminAccount.setPassword(registerPasswordField.getText());
-        adminAccount.setAddress(registerAddress.getText());
-        adminAccount.setSecurityQuestion(registerSecurityQuestionComboBox.getSelectedItem().toString());
-        adminAccount.setSecurityAnswer(registerAnswerField.getText());
+        email = registerEmailField.getText();
+        firstName = registerFirstNameField.getText();
+        lastName = registerLastNameTextField.getText();
+        username = registerUsernameField.getText();
+        phoneNumber = Long.parseLong(registerPhoneNumberTextField.getText());
+        identityCard = registerIdentityCardOptionComboBox.getSelectedItem().toString();
+        nationalID = Long.parseLong(registerIdentityIDTextField.getText());
+        nationality = registerNationalityTextField.getText();
+        password = registerPasswordField.getText();
+        address = registerAddress.getText();
+        securityQuestion = registerSecurityQuestionComboBox.getSelectedItem().toString();
+        securityAnswer = registerAnswerField.getText();
 
         try {
             con = connectionProvider.getCon();
             pst = con.prepareStatement(query);
-            pst.setString(1, adminAccount.getEmail());
-            pst.setString(2, adminAccount.getFirstName());
-            pst.setString(3, adminAccount.getLastName());
-            pst.setString(4, adminAccount.getUsername());
-            pst.setLong(5, adminAccount.getPhoneNumber());
-            pst.setString(6, adminAccount.getNationality());
-            pst.setString(7, adminAccount.getIdentityCard());
-            pst.setLong(8, adminAccount.getNationalID());
-            pst.setString(9, adminAccount.getPassword());
-            pst.setString(10, adminAccount.getAddress());
-            pst.setString(11, adminAccount.getSecurityQuestion());
-            pst.setString(12, adminAccount.getSecurityAnswer());
+            pst.setString(1, email);
+            pst.setString(2, firstName);
+            pst.setString(3, lastName);
+            pst.setString(4, username);
+            pst.setLong(5, phoneNumber);
+            pst.setString(6, nationality);
+            pst.setString(7, identityCard);
+            pst.setLong(8, nationalID);
+            pst.setString(9, password);
+            pst.setString(10, address);
+            pst.setString(11, securityQuestion);
+            pst.setString(12, securityAnswer);
             pst.executeUpdate();
+            pst.close();
+            resultSet.close();
             JOptionPane.showMessageDialog(null, "User Created!");
         } catch (SQLException ex) {
             Logger.getLogger(Login_Register.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,6 +97,8 @@ public class AdminAccountManager {
             } else {
                 bool = false;
             }
+            pst.close();
+            resultSet.close();
         } catch (SQLException ex) {
             Logger.getLogger(Login_Register.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -103,16 +109,17 @@ public class AdminAccountManager {
         boolean checkUser = false;
         query = "SELECT * FROM `user_login` WHERE `username`=?";
         try {
-            ConnectionProvider connectionProvider = new ConnectionProvider();
             con = connectionProvider.getCon();
             pst = con.prepareStatement(query);
             pst.setString(1, username);
-
             resultSet = pst.executeQuery();
-
             if (resultSet.next()) {
                 checkUser = true;
+                resultSet.close();
+                pst.close();
             }
+            resultSet.close();
+            pst.close();
         } catch (SQLException ex) {
             Logger.getLogger(Login_Register.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -123,17 +130,17 @@ public class AdminAccountManager {
         boolean checkEmail = false;
         query = "SELECT * FROM `user_login` WHERE `email`=?";
         try {
-            ConnectionProvider connectionProvider = new ConnectionProvider();
             con = connectionProvider.getCon();
             pst = con.prepareStatement(query);
             pst.setString(1, email);
-
             resultSet = pst.executeQuery();
-
             if (resultSet.next()) {
                 checkEmail = true;
-
+                resultSet.close();
+                pst.close();
             }
+            resultSet.close();
+            pst.close();
         } catch (SQLException ex) {
             Logger.getLogger(Login_Register.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -145,18 +152,18 @@ public class AdminAccountManager {
         boolean checkID = false;
         query = "SELECT * FROM `user_login` WHERE `identity_card`=? AND `national_id`=?";
         try {
-            ConnectionProvider connectionProvider = new ConnectionProvider();
             con = connectionProvider.getCon();
             pst = con.prepareStatement(query);
             pst.setString(1, indentityCard);
             pst.setString(2, identityID);
-
             resultSet = pst.executeQuery();
-
             if (resultSet.next()) {
                 checkID = true;
-
+                resultSet.close();
+                pst.close();
             }
+            resultSet.close();
+            pst.close();
         } catch (SQLException ex) {
             Logger.getLogger(Login_Register.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -171,11 +178,9 @@ public class AdminAccountManager {
         model.setRowCount(0);
         try {
             while (resultSet.next()) {
-
                 model.addRow(new Object[]{resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getLong(6), resultSet.getString(7), resultSet.getString(8), resultSet.getLong(9), resultSet.getString(11)});
             }
             resultSet.close();
-
         } catch (SQLException e) {
         }
     }
@@ -188,7 +193,7 @@ public class AdminAccountManager {
             DefaultTableModel model = (DefaultTableModel) jTable.getModel();
             if (jTextField.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Input username or email");
-            } 
+            }
             model.setRowCount(0);
             while (resultSet.next()) {
                 model.addRow(new Object[]{resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getLong(6), resultSet.getString(7), resultSet.getString(8), resultSet.getLong(9), resultSet.getString(11)});
@@ -213,7 +218,7 @@ public class AdminAccountManager {
                 JOptionPane.showMessageDialog(null, "Delete successfuly");
                 pst.close();
             }
-
+            pst.close();
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -222,19 +227,24 @@ public class AdminAccountManager {
     public boolean checkEmail(JTextField emailField) {
         boolean bool = false;
         query = "SELECT * FROM `user_login` WHERE `email` =?";
-        adminAccount.setEmail(emailField.getText());
-
+        email = emailField.getText();
         try {
             con = connectionProvider.getCon();
             pst = con.prepareStatement(query);
-            pst.setString(1, adminAccount.getEmail());
+            pst.setString(1, email);
             resultSet = pst.executeQuery();
 
             if (resultSet.next()) {
                 bool = true;
+                pst.close();
+                resultSet.close();
             } else {
                 bool = false;
+                pst.close();
+                resultSet.close();
             }
+            resultSet.close();
+            pst.close();
         } catch (SQLException ex) {
             Logger.getLogger(forgetPasswordJPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -244,33 +254,71 @@ public class AdminAccountManager {
 
     public void changePassword(JTextField emailField, JTextField securityQuestionTextField, JTextField securityAnswerTextField, JTextField passField) {
         query = "SELECT * FROM `user_login` WHERE `email` =? AND `security_question`=? AND `security_answer`=?";
-        adminAccount.setEmail(emailField.getText());
-        adminAccount.setSecurityQuestion(securityQuestionTextField.getText());
-        adminAccount.setSecurityAnswer(securityAnswerTextField.getText());
-        adminAccount.setPassword(passField.getText());
+        email = emailField.getText();
+        securityQuestion = securityQuestionTextField.getText();
+        securityAnswer = securityAnswerTextField.getText();
+        password = passField.getText();
 
         try {
             con = connectionProvider.getCon();
             pst = con.prepareStatement(query);
-            pst.setString(1, adminAccount.getEmail());
-            pst.setString(2, adminAccount.getSecurityQuestion());
-            pst.setString(3, adminAccount.getSecurityAnswer());
+            pst.setString(1, email);
+            pst.setString(2, securityQuestion);
+            pst.setString(3, securityAnswer);
             resultSet = pst.executeQuery();
             if (!resultSet.next()) {
                 JOptionPane.showMessageDialog(null, "The answer is not correct");
             } else {
                 pst = con.prepareStatement("UPDATE `user_login` Set `password`=? Where `email`=? ");
-                pst.setString(1, adminAccount.getPassword());
-                pst.setString(2, adminAccount.getEmail());
+                pst.setString(1, password);
+                pst.setString(2, email);
                 pst.executeUpdate();
+                pst.close();
+                resultSet.close();
                 JOptionPane.showMessageDialog(null, "Password has been update");
             }
+            pst.close();
+            resultSet.close();
         } catch (SQLException ex) {
             Logger.getLogger(forgetPasswordJPanel.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
 
+//    public  void checkValidEmail(JTextField emailField, JTextField securityQuestionField, JTextField securityAnswerField, JTextField passField){
+//        email=emailField.getText();
+//        securityQuestion=securityQuestionField.getText();
+//        securityAnswer=securityAnswerField.getText();
+//        password=passField.getText();
+//        int check = 0;
+//        query = "SELECT * FROM `user_login` WHERE `email` =?";
+//        emailField.getText();
+//        if (emailField.getText().equals(0) || emailField.getText().equals("example@email.com")) {
+//            check = 1;
+//            JOptionPane.showMessageDialog(null, "Please Enter your Email");
+//        } else {
+//            try {
+//                con = connectionProvider.getCon();
+//                pst = con.prepareStatement(query);
+//                pst.setString(1, email);
+//                resultSet = pst.executeQuery();
+//
+//                if (resultSet.next()) {
+//                    check = 1;
+//                    securityAnswerField.setEditable(true);
+//                    securityQuestionField.setEditable(false);
+//                    emailField.setEditable(false);
+//                    securityQuestionField.setText(resultSet.getString(12));
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(forgetPasswordJPanel.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//        }
+//        if (check == 0) {
+//            JOptionPane.showMessageDialog(null, "Incorrect Email");
+//        }
+//    }
     public static boolean is_Letter(char ch) {
         ch = Character.toUpperCase(ch);
         return (ch >= 'A' && ch <= 'Z');

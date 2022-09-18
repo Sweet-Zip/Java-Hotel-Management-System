@@ -22,28 +22,26 @@ public class ConnectionProvider {
     public Connection getCon() {
         try {
             Class.forName("org.sqlite.JDBC");
-            con = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Desktop-Desk\\Desktop\\data.sqlite");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConnectionProvider.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+            con = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\KimKuong\\Documents\\NetBeansProjects\\Hotel Management\\data.sqlite");
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ConnectionProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
         return con;
     }
-    
-    public PreparedStatement getPreparedStatement(String query){
+
+    public PreparedStatement getPreparedStatement(String query) {
         try {
-            con=getCon();
-            ps=con.prepareStatement(query);
+            con = getCon();
+            ps = con.prepareStatement(query);
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ps;
     }
-    
+
     public ResultSet getResultSet(String query) {
         try {
-            con=getCon();
+            con = getCon();
             st = con.createStatement();
             rs = st.executeQuery(query);
         } catch (SQLException ex) {

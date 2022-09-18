@@ -8,6 +8,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,12 +31,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CustomerRecord {
 
-    private String name, roomNumber, roomType, bedType, price, checkInDate;
+    private String name, roomNumber, roomType, bedType, price, checkInDate, email, indentityCard, nationality;
+    private long phoneNumber, nationalID;
     private ResultSet resultSet;
     private String query;
     private Connection con;
     ConnectionProvider connectionProvider = new ConnectionProvider();
-    Person person = new Person();
     private int ID, totalPrice, getMoney, totalDay, change;
     private String checkOutDate;
     private PreparedStatement pst;
@@ -52,13 +53,12 @@ public class CustomerRecord {
         bedType = (String) bedT.getSelectedItem();
         roomType = (String) roomT.getSelectedItem();
         try {
-
             query = "SELECT * FROM `room_manager` WHERE room_type='" + roomType + "' AND bed_type='" + bedType + "' AND status='Available'";
             resultSet = connectionProvider.getResultSet(query);
             while (resultSet.next()) {
-
                 roomNum.addItem(resultSet.getInt(2));
             }
+            resultSet.close();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,26 +68,25 @@ public class CustomerRecord {
         query = "SELECT * FROM `room_manager` WHERE `room_no`=" + comboBox.getSelectedItem();
         try {
             con = connectionProvider.getCon();
-            PreparedStatement pst = con.prepareStatement(query);
             resultSet = pst.executeQuery(query);
             while (resultSet.next()) {
                 jTextField.setText(resultSet.getString(5));
             }
+            resultSet.close();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void addCheckIn(JTextField nameField, JTextField emailField, JTextField phoneNumberField, JTextField nationalityField, JComboBox indentityCard,
+    public void addCheckIn(JTextField nameField, JTextField emailField, JTextField phoneNumberField, JTextField nationalityField, JComboBox indentityCardComboBox,
             JTextField nationalIDField, JTextField checkinDateField, JComboBox roomT, JComboBox bedT, JComboBox roomNo, JTextField priceField) {
-
         //dateToday(checkinDateField);
-        person.setFirstName(nameField.getText());
-        person.setEmail(emailField.getText());
-        person.setPhoneNumber(Long.parseLong(phoneNumberField.getText()));
-        person.setNationality(nationalityField.getText());
-        person.setIdentityCard(indentityCard.getSelectedItem().toString());
-        person.setNationalID(Long.parseLong(nationalIDField.getText()));
+        name = nameField.getText();
+        email = emailField.getText();
+        phoneNumber = Long.parseLong(phoneNumberField.getText());
+        nationality = nationalityField.getText();
+        this.indentityCard = indentityCardComboBox.getSelectedItem().toString();
+        nationalID = Long.parseLong(nationalIDField.getText());
         checkInDate = checkinDateField.getText();
         roomType = roomT.getSelectedItem().toString();
         bedType = bedT.getSelectedItem().toString();
@@ -102,18 +101,19 @@ public class CustomerRecord {
 
                 query = "INSERT INTO `customer`(`email`, `name`, `phone_number`, `nationality`, `identity_card`, `national_id`, `checkin_date`, `room_type`, `bed_type`, `room_no`, `price_per_day`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
                 pst = con.prepareStatement(query);
-                pst.setString(1, person.getEmail());
-                pst.setString(2, person.getFirstName());
-                pst.setLong(3, person.getPhoneNumber());
-                pst.setString(4, person.getNationality());
-                pst.setString(5, person.getIdentityCard());
-                pst.setLong(6, person.getNationalID());
+                pst.setString(1, email);
+                pst.setString(2, name);
+                pst.setLong(3, phoneNumber);
+                pst.setString(4, nationality);
+                pst.setString(5, indentityCard);
+                pst.setLong(6, nationalID);
                 pst.setString(7, checkInDate);
                 pst.setString(8, roomType);
                 pst.setString(9, bedType);
                 pst.setString(10, roomNumber);
                 pst.setString(11, price);
                 pst.executeUpdate();
+                pst.close();
                 JOptionPane.showMessageDialog(null, "Check-In Succeed!");
             }
 
@@ -157,12 +157,12 @@ public class CustomerRecord {
                 totalPrice = totalDay * price;
 
                 totalPriceField.setText(String.valueOf(totalPrice));
+                resultSet.close();
             } else {
                 JOptionPane.showMessageDialog(null, "Incorrect room number or room is not booked yet");
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+            resultSet.close();
+        } catch (SQLException | ParseException ex) {
             Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -170,7 +170,6 @@ public class CustomerRecord {
     public void calChange(JTextField getFromCustomerField, JTextField totalPriceField, JTextField changeField) {
         totalPrice = Integer.parseInt(totalPriceField.getText());
         getMoney = Integer.parseInt(getFromCustomerField.getText());
-
         if (getMoney >= totalPrice) {
             changeField.setText(String.valueOf(getMoney - totalPrice));
         } else {
@@ -191,9 +190,10 @@ public class CustomerRecord {
         try {
             if (resultSet.next()) {
                 ID = resultSet.getInt(1);
-                query = "UPDATE `customer` SET `checkout_date`=?, `total_day`=?, `get_money`=?, `change_money`=?, `total_price`=? WHERE `room_no`=" + roomNumber;
                 con = connectionProvider.getCon();
+                resultSet.close();
                 try {
+                    query = "UPDATE `customer` SET `checkout_date`=?, `total_day`=?, `get_money`=?, `change_money`=?, `total_price`=? WHERE `room_no`=" + roomNumber;
                     pst = con.prepareStatement(query);
                     pst.setString(1, checkOutDate);
                     pst.setInt(2, totalDay);
@@ -201,13 +201,17 @@ public class CustomerRecord {
                     pst.setInt(4, change);
                     pst.setInt(5, totalPrice);
                     pst.executeUpdate();
+                    pst.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
                     query = "UPDATE `room_manager` SET `status`= 'Available' WHERE `room_no`=" + roomNumber;
                     pst = con.prepareStatement(query);
                     pst.executeUpdate();
+                    pst.close();
                     JOptionPane.showMessageDialog(null, "Customer checkout succed");
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (HeadlessException | SQLException e) {
                 }
             }
         } catch (SQLException ex) {
@@ -220,7 +224,7 @@ public class CustomerRecord {
             JTextField pricePerDayField, JTextField totalDayField, JTextField getMoneyField, JTextField changeField, JTextField totalPriceField) {
 
         //roomNumber = roomNoField.getText();
-        String patch = "C:\\Users\\Desktop-Desk\\Documents\\NetBeansProjects\\HotelManagement\\invoid\\";
+        String patch = "C:\\Users\\KimKuong\\Documents\\NetBeansProjects\\Hotel Management\\invoid\\";
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(patch + nameField.getText() + " " + checkOutDateField.getText() + ".pdf"));
@@ -247,15 +251,12 @@ public class CustomerRecord {
             Paragraph paragraph6 = new Paragraph("Thank You Please Visit Us Again Next Time");
             doc.add(paragraph6);
 
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DocumentException ex) {
+        } catch (FileNotFoundException | DocumentException ex) {
             Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
         }
         doc.close();
         int a = JOptionPane.showConfirmDialog(null, "Do you want to print the bill invoid?", "Select", JOptionPane.YES_NO_OPTION);
         if (a == 0) {
-
             if ((new File(patch + nameField.getText() + " " + checkOutDateField.getText() + ".pdf")).exists()) {
                 try {
                     Process process = Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler " + patch + nameField.getText() + " " + checkOutDateField.getText() + ".pdf");
@@ -275,7 +276,6 @@ public class CustomerRecord {
         model.setRowCount(0);
         try {
             while (resultSet.next()) {
-
                 model.addRow(new Object[]{resultSet.getInt(1), resultSet.getString(3), resultSet.getString(2), resultSet.getLong(4), resultSet.getString(5),
                     resultSet.getString(6), resultSet.getLong(7), resultSet.getString(8), resultSet.getInt(11), resultSet.getString(9), resultSet.getString(10), resultSet.getInt(12)});
             }
@@ -288,7 +288,6 @@ public class CustomerRecord {
         query = "SELECT * FROM `customer` WHERE `name` like '%" + jTextField.getText() + "%' AND `total_price` IS NULL";
         resultSet = connectionProvider.getResultSet(query);
         model = (DefaultTableModel) jTable.getModel();
-        
         if (jTextField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Input customer name to search...");
         } else {
@@ -296,14 +295,13 @@ public class CustomerRecord {
                 model.setRowCount(0);
                 while (resultSet.next()) {
                     model.addRow(new Object[]{resultSet.getInt(1), resultSet.getString(3), resultSet.getString(2), resultSet.getLong(4), resultSet.getInt(11),
-                    resultSet.getString(9), resultSet.getString(10), resultSet.getInt(12), resultSet.getString(8), resultSet.getString(13), resultSet.getInt(14),
-                    resultSet.getInt(16), resultSet.getInt(17), resultSet.getInt(15)});
+                        resultSet.getString(9), resultSet.getString(10), resultSet.getInt(12), resultSet.getString(8), resultSet.getString(13), resultSet.getInt(14),
+                        resultSet.getInt(16), resultSet.getInt(17), resultSet.getInt(15)});
                 }
                 resultSet.close();
             } catch (SQLException e) {
             }
         }
-
     }
 
     public void showCustomerHistory(JTable jTable) {
@@ -326,26 +324,26 @@ public class CustomerRecord {
         query = "SELECT * FROM `customer` WHERE `name` like '%" + jTextField.getText() + "%' AND `total_price` IS NOT NULL";
         resultSet = connectionProvider.getResultSet(query);
         model = (DefaultTableModel) jTable.getModel();
-        
+
         if (jTextField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Input customer name to search...");
         } else {
             model.setRowCount(0);
             try {
-            while (resultSet.next()) {
-                model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2), resultSet.getString(4), resultSet.getString(11),
-                    resultSet.getString(9), resultSet.getString(10), resultSet.getString(12), resultSet.getString(8), resultSet.getString(13), resultSet.getString(14),
-                    resultSet.getString(16), resultSet.getString(17), resultSet.getString(15)});
+                while (resultSet.next()) {
+                    model.addRow(new Object[]{resultSet.getString(1), resultSet.getString(3), resultSet.getString(2), resultSet.getString(4), resultSet.getString(11),
+                        resultSet.getString(9), resultSet.getString(10), resultSet.getString(12), resultSet.getString(8), resultSet.getString(13), resultSet.getString(14),
+                        resultSet.getString(16), resultSet.getString(17), resultSet.getString(15)});
+                }
+                resultSet.close();
+            } catch (SQLException e) {
             }
-            resultSet.close();
-        } catch (SQLException e) {
         }
-        }
-        
+
     }
 
     public void printInvoid(JTable jTable) {
-        String patch = "C:\\Users\\Desktop-Desk\\Documents\\NetBeansProjects\\HotelManagement\\invoid\\";
+        String patch = "C:\\Users\\KimKuong\\Documents\\NetBeansProjects\\Hotel Management\\invoid\\";
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
         int row = jTable.getSelectedRow();
         try {
@@ -373,9 +371,7 @@ public class CustomerRecord {
             Paragraph paragraph6 = new Paragraph("Thank You Please Visit Us Again Next Time");
             doc.add(paragraph6);
 
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DocumentException ex) {
+        } catch (FileNotFoundException | DocumentException ex) {
             Logger.getLogger(CustomerRecord.class.getName()).log(Level.SEVERE, null, ex);
         }
         doc.close();
